@@ -11,7 +11,9 @@ import SwiftUI
 struct RecipesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(errorManager: DIContainer.shared.errorManager)
+                .environment(\.diContainer, DIContainer.shared)
+            
         }
     }
 }

@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C7087ED02CEE281E00531478 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = C7087ECF2CEE281E00531478 /* Swinject */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C7087E5F2CEE250300531478 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -29,20 +33,91 @@
 		C7087E682CEE250300531478 /* RecipesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C7087F662CEE28EC00531478 /* Exceptions for "Recipes" folder in "RecipesTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/DependencyInjection/DIContainer.swift,
+				Core/Extensions/ValidRecipeExtension.swift,
+				Core/Utilities/Helpers.swift,
+				Features/Recipes/Models/Recipe.swift,
+				Features/Recipes/Models/Recipes.swift,
+				Features/Recipes/Repository/RecipeRepository.swift,
+				Features/Recipes/Services/RecipesService.swift,
+				Features/Recipes/UseCases/FetchRecipesUseCase.swift,
+				Features/Recipes/ViewModels/RecipeListViewModel.swift,
+				Features/Recipes/Views/RecipeCellView.swift,
+				Features/Recipes/Views/RecipeListView.swift,
+				Features/Recipes/Views/YoutubeVideoSheetView.swift,
+			);
+			target = C7087E5D2CEE250300531478 /* RecipesTests */;
+		};
+		C7087F672CEE28EC00531478 /* Exceptions for "Recipes" folder in "RecipesUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/DependencyInjection/DIContainer.swift,
+				Core/Extensions/ValidRecipeExtension.swift,
+				Core/Utilities/Helpers.swift,
+				Features/Recipes/Models/Recipe.swift,
+				Features/Recipes/Models/Recipes.swift,
+				Features/Recipes/Repository/RecipeRepository.swift,
+				Features/Recipes/Services/RecipesService.swift,
+				Features/Recipes/UseCases/FetchRecipesUseCase.swift,
+				Features/Recipes/ViewModels/RecipeListViewModel.swift,
+				Features/Recipes/Views/RecipeCellView.swift,
+				Features/Recipes/Views/RecipeListView.swift,
+				Features/Recipes/Views/YoutubeVideoSheetView.swift,
+			);
+			target = C7087E672CEE250300531478 /* RecipesUITests */;
+		};
+		C7087F782CEE28F400531478 /* Exceptions for "Tests" folder in "Recipes" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RecipesTests/RecipesTests.swift,
+				RecipesUITests/RecipesUITests.swift,
+				RecipesUITests/RecipesUITestsLaunchTests.swift,
+			);
+			target = C7087E4D2CEE250100531478 /* Recipes */;
+		};
+		C7087F792CEE28F400531478 /* Exceptions for "Tests" folder in "RecipesTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RecipeListMockData.swift,
+				RecipeServiceMock.swift,
+				RecipesTests/RecipesTests.swift,
+			);
+			target = C7087E5D2CEE250300531478 /* RecipesTests */;
+		};
+		C7087F7A2CEE28F400531478 /* Exceptions for "Tests" folder in "RecipesUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RecipeListMockData.swift,
+				RecipeServiceMock.swift,
+				RecipesUITests/RecipesUITests.swift,
+				RecipesUITests/RecipesUITestsLaunchTests.swift,
+			);
+			target = C7087E672CEE250300531478 /* RecipesUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C7087E502CEE250100531478 /* Recipes */ = {
+		C7087ED12CEE28AA00531478 /* Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C7087F782CEE28F400531478 /* Exceptions for "Tests" folder in "Recipes" target */,
+				C7087F792CEE28F400531478 /* Exceptions for "Tests" folder in "RecipesTests" target */,
+				C7087F7A2CEE28F400531478 /* Exceptions for "Tests" folder in "RecipesUITests" target */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		C7087F3D2CEE28EC00531478 /* Recipes */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C7087F662CEE28EC00531478 /* Exceptions for "Recipes" folder in "RecipesTests" target */,
+				C7087F672CEE28EC00531478 /* Exceptions for "Recipes" folder in "RecipesUITests" target */,
+			);
 			path = Recipes;
-			sourceTree = "<group>";
-		};
-		C7087E612CEE250300531478 /* RecipesTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RecipesTests;
-			sourceTree = "<group>";
-		};
-		C7087E6B2CEE250300531478 /* RecipesUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RecipesUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7087ED02CEE281E00531478 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +151,8 @@
 		C7087E452CEE250100531478 = {
 			isa = PBXGroup;
 			children = (
-				C7087E502CEE250100531478 /* Recipes */,
-				C7087E612CEE250300531478 /* RecipesTests */,
-				C7087E6B2CEE250300531478 /* RecipesUITests */,
+				C7087F3D2CEE28EC00531478 /* Recipes */,
+				C7087ED12CEE28AA00531478 /* Tests */,
 				C7087E4F2CEE250100531478 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,10 +183,12 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				C7087E502CEE250100531478 /* Recipes */,
+				C7087ED12CEE28AA00531478 /* Tests */,
+				C7087F3D2CEE28EC00531478 /* Recipes */,
 			);
 			name = Recipes;
 			packageProductDependencies = (
+				C7087ECF2CEE281E00531478 /* Swinject */,
 			);
 			productName = Recipes;
 			productReference = C7087E4E2CEE250100531478 /* Recipes.app */;
@@ -129,9 +206,6 @@
 			);
 			dependencies = (
 				C7087E602CEE250300531478 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				C7087E612CEE250300531478 /* RecipesTests */,
 			);
 			name = RecipesTests;
 			packageProductDependencies = (
@@ -152,9 +226,6 @@
 			);
 			dependencies = (
 				C7087E6A2CEE250300531478 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				C7087E6B2CEE250300531478 /* RecipesUITests */,
 			);
 			name = RecipesUITests;
 			packageProductDependencies = (
@@ -195,6 +266,9 @@
 			);
 			mainGroup = C7087E452CEE250100531478;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C7087ECE2CEE281E00531478 /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C7087E4F2CEE250100531478 /* Products */;
 			projectDirPath = "";
@@ -558,6 +632,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C7087ECE2CEE281E00531478 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C7087ECF2CEE281E00531478 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7087ECE2CEE281E00531478 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C7087E462CEE250100531478 /* Project object */;
 }
