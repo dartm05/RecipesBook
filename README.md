@@ -1,6 +1,5 @@
 # RecipesBook
 
-![Simulator Screenshot - iPhone 16 Pro - 2024-11-20 at 19 42 12](https://github.com/user-attachments/assets/179eaff9-df5b-4035-8029-ba1cd8e42629)
 
 ### Steps to Run the App
 
