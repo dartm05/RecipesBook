@@ -6,34 +6,40 @@
 //
 
 import Combine
-
+import Foundation
 @MainActor
 final class RecipeListViewModel: ObservableObject {
     @Published var recipes: [Recipe] = []
-    @Published var error: String?
+ 
     @Published var isLoading: Bool = false
     
-    private let fetchRecipesUseCase: FetchRecipesUseCaseProtocol
+    private let errorManager: ErrorManager
+    private let recipesUseCase: RecipesUseCaseProtocol
     
-    init(fetchRecipesUseCase: FetchRecipesUseCaseProtocol) {
-        self.fetchRecipesUseCase = fetchRecipesUseCase
+    init(recipesUseCase: RecipesUseCaseProtocol, errorManager: ErrorManager) {
+        self.recipesUseCase = recipesUseCase
+        self.errorManager = errorManager
     }
     
-    func fetchRecipes() async{
+    func fetchRecipes() async {
         isLoading = true
-        error = nil
-        
-            do {
-                let recipes = try await self.fetchRecipesUseCase.fetchRecipes()
-                self.recipes = recipes ?? []
-            } catch {
-                self.error = error.localizedDescription
+        do {
+            let result = try await recipesUseCase.fetchRecipes()
+            DispatchQueue.main.async {
+                self.recipes = result ?? []
                 self.isLoading = false
             }
-            
-            self.isLoading = false
-     
+        } catch let appError as AppError {
+            self.errorManager.handleError(appError)
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorManager.handleError(.badResponse)
+                self.isLoading = false
+            }
+        }
+        
     }
-    
-    
 }

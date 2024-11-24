@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C7087ED02CEE281E00531478 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = C7087ECF2CEE281E00531478 /* Swinject */; };
+		C73423892CEED6ED0030807F /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = C73423882CEED6ED0030807F /* Swinject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,12 +40,16 @@
 			membershipExceptions = (
 				Core/DependencyInjection/DIContainer.swift,
 				Core/Extensions/ValidRecipeExtension.swift,
+				Core/Networking/NetworkMonitor.swift,
+				Core/Services/ErrorManager.swift,
 				Core/Utilities/Helpers.swift,
 				Features/Recipes/Models/Recipe.swift,
 				Features/Recipes/Models/Recipes.swift,
 				Features/Recipes/Repository/RecipeRepository.swift,
+				Features/Recipes/Services/Mocks/RecipeListMockData.swift,
+				Features/Recipes/Services/Mocks/RecipeServiceMock.swift,
 				Features/Recipes/Services/RecipesService.swift,
-				Features/Recipes/UseCases/FetchRecipesUseCase.swift,
+				Features/Recipes/UseCases/RecipesUseCase.swift,
 				Features/Recipes/ViewModels/RecipeListViewModel.swift,
 				Features/Recipes/Views/RecipeCellView.swift,
 				Features/Recipes/Views/RecipeListView.swift,
@@ -57,12 +62,16 @@
 			membershipExceptions = (
 				Core/DependencyInjection/DIContainer.swift,
 				Core/Extensions/ValidRecipeExtension.swift,
+				Core/Networking/NetworkMonitor.swift,
+				Core/Services/ErrorManager.swift,
 				Core/Utilities/Helpers.swift,
 				Features/Recipes/Models/Recipe.swift,
 				Features/Recipes/Models/Recipes.swift,
 				Features/Recipes/Repository/RecipeRepository.swift,
+				Features/Recipes/Services/Mocks/RecipeListMockData.swift,
+				Features/Recipes/Services/Mocks/RecipeServiceMock.swift,
 				Features/Recipes/Services/RecipesService.swift,
-				Features/Recipes/UseCases/FetchRecipesUseCase.swift,
+				Features/Recipes/UseCases/RecipesUseCase.swift,
 				Features/Recipes/ViewModels/RecipeListViewModel.swift,
 				Features/Recipes/Views/RecipeCellView.swift,
 				Features/Recipes/Views/RecipeListView.swift,
@@ -73,28 +82,26 @@
 		C7087F782CEE28F400531478 /* Exceptions for "Tests" folder in "Recipes" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				RecipesTests/RecipesTests.swift,
-				RecipesUITests/RecipesUITests.swift,
-				RecipesUITests/RecipesUITestsLaunchTests.swift,
+				RecipesTests/RecipesUseCaseTests.swift,
+				RecipesTests/RecipesViewModelTests.swift,
+				RecipesUITests/RecipeCellViewTests.swift,
+				RecipesUITests/RecipeListViewUITests.swift,
 			);
 			target = C7087E4D2CEE250100531478 /* Recipes */;
 		};
 		C7087F792CEE28F400531478 /* Exceptions for "Tests" folder in "RecipesTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				RecipeListMockData.swift,
-				RecipeServiceMock.swift,
-				RecipesTests/RecipesTests.swift,
+				RecipesTests/RecipesUseCaseTests.swift,
+				RecipesTests/RecipesViewModelTests.swift,
 			);
 			target = C7087E5D2CEE250300531478 /* RecipesTests */;
 		};
 		C7087F7A2CEE28F400531478 /* Exceptions for "Tests" folder in "RecipesUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				RecipeListMockData.swift,
-				RecipeServiceMock.swift,
-				RecipesUITests/RecipesUITests.swift,
-				RecipesUITests/RecipesUITestsLaunchTests.swift,
+				RecipesUITests/RecipeCellViewTests.swift,
+				RecipesUITests/RecipeListViewUITests.swift,
 			);
 			target = C7087E672CEE250300531478 /* RecipesUITests */;
 		};
@@ -142,6 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C73423892CEED6ED0030807F /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +161,7 @@
 			children = (
 				C7087F3D2CEE28EC00531478 /* Recipes */,
 				C7087ED12CEE28AA00531478 /* Tests */,
+				C73423872CEED6ED0030807F /* Frameworks */,
 				C7087E4F2CEE250100531478 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,6 +174,13 @@
 				C7087E682CEE250300531478 /* RecipesUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C73423872CEED6ED0030807F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +245,7 @@
 			);
 			name = RecipesUITests;
 			packageProductDependencies = (
+				C73423882CEED6ED0030807F /* Swinject */,
 			);
 			productName = RecipesUITests;
 			productReference = C7087E682CEE250300531478 /* RecipesUITests.xctest */;
@@ -646,6 +663,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		C7087ECF2CEE281E00531478 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7087ECE2CEE281E00531478 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		C73423882CEED6ED0030807F /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C7087ECE2CEE281E00531478 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;

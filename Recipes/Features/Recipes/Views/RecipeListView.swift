@@ -17,7 +17,7 @@ struct RecipeListView: View {
     @StateObject private var viewModel : RecipeListViewModel
     @State private var selectedVideoUrl: IdentifiableUrl? = nil
     @State private var searchText: String = ""
-
+    
     
     init(viewModel:RecipeListViewModel){
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -26,15 +26,27 @@ struct RecipeListView: View {
     var body: some View {
         NavigationView {
             VStack{
-            
-                ScrollView {
-                    if viewModel.isLoading {
-                        ProgressView()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else if viewModel.recipes.isEmpty {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                        .padding(.vertical)
+                        .accessibilityIdentifier("ProgressView")
+                } else if viewModel.recipes.isEmpty {
+                    VStack{
                         Text("No recipes found")
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else {
+                            .font(.title2)
+                            .bold()
+                            .padding(.vertical)
+                           
+                        Image("no_data")
+                            .resizable()
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding(.horizontal)
+                    }
+                    
+                }
+                else {
+                    ScrollView {
                         LazyVGrid( columns: [GridItem(.adaptive(minimum: 180))], spacing: 20){
                             ForEach(filteredRecipes) { recipe in
                                 RecipeCellView(recipe: recipe, youtubeOnTap: {
@@ -45,12 +57,13 @@ struct RecipeListView: View {
                                     openWebsite(urlString: recipe.sourceUrl ?? "")
                                 }
                             }
-                        }.searchable(text : $searchText)
-                            .padding(.horizontal)
+                        }
                         .padding(.top, 10)
                     }
                 }
             }
+            .searchable(text : $searchText)
+            .padding(.horizontal)
             .navigationTitle("Recipes")
             .navigationViewStyle(.stack)
             .onAppear {
@@ -60,6 +73,7 @@ struct RecipeListView: View {
             }
             .sheet(item: $selectedVideoUrl) { identifiableUrl in
                 YouTubeWebView(url: identifiableUrl.url)
+                    .accessibilityIdentifier("YouTubeWebView")
             }.onDisappear{
                 selectedVideoUrl = nil
             }
@@ -72,14 +86,14 @@ struct RecipeListView: View {
     }
     
     private var filteredRecipes: [Recipe] {
-            if searchText.isEmpty {
-                return viewModel.recipes
-            } else {
-                return viewModel.recipes.filter { recipe in
-                    recipe.name.lowercased().contains(searchText.lowercased())
-                }
+        if searchText.isEmpty {
+            return viewModel.recipes
+        } else {
+            return viewModel.recipes.filter { recipe in
+                recipe.name.lowercased().contains(searchText.lowercased())
             }
         }
+    }
 }
 
 

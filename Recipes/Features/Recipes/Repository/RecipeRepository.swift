@@ -5,11 +5,11 @@
 //  Created by Daniella Arteaga on 20/11/24.
 //
 
-protocol RecipeRepositoryProtocol {
+protocol RecipesRepositoryProtocol {
     func fetchRecipes() async throws -> [Recipe]?
 }
 
-final class RecipeRepository: RecipeRepositoryProtocol {
+final class RecipesRepository: RecipesRepositoryProtocol {
     private let apiService: RecipesServiceProtocol
     
     init(apiService: RecipesServiceProtocol) {

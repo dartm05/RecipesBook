@@ -11,11 +11,13 @@ struct ContentView: View {
     @Environment(\.diContainer) private var diContainer
     @ObservedObject var errorManager: ErrorManager
     
-    init( errorManager: ErrorManager) {
+    init(errorManager: ErrorManager) {
         self.errorManager = errorManager
     }
+    
     var body: some View {
-        let viewModel = diContainer.resolveViewModel()
+        let usecase = diContainer.resolve(RecipesUseCaseProtocol.self)!
+        let viewModel = RecipeListViewModel(recipesUseCase: usecase, errorManager: errorManager)
         
         RecipeListView(viewModel: viewModel)
             .alert(item: $errorManager.currentError) { appError in
@@ -23,7 +25,7 @@ struct ContentView: View {
                     title: Text(appError.title),
                     message: Text(appError.message),
                     dismissButton: .default(Text("OK")) {
-                        diContainer.errorManager.clearError()
+                        errorManager.clearError()
                     }
                 )
             }
@@ -31,5 +33,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView( errorManager: .shared)
+    ContentView(errorManager: .shared)
 }

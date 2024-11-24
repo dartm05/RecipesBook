@@ -10,13 +10,13 @@ import Network
 import Combine
 
 final class NetworkMonitor: ObservableObject {
-    static let shared = NetworkMonitor()
+    
     
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue.global(qos: .background)
-    private var errorManager: ErrorManager?
+    private var errorManager: ErrorManager
     
-    init(errorManager: ErrorManager = .shared) {
+    init(errorManager: ErrorManager) {
         self.errorManager = errorManager
         startMonitoring()
     }
@@ -32,9 +32,7 @@ final class NetworkMonitor: ObservableObject {
     
     private func handleNoInternetConnection() {
         DispatchQueue.main.async {
-            self.errorManager?.handleError(
-                AppError(title: "No Internet Connection", message: "Please check your conection and try again.")
-            )
+            self.errorManager.handleError(AppError.networkError)
         }
     }
     

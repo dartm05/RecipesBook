@@ -7,6 +7,6 @@
 
 extension Recipe {
     var isValid: Bool {
-        return !id.isEmpty && !name.isEmpty
+        return !id.isEmpty && !name.isEmpty && !cuisine.isEmpty
     }
 }

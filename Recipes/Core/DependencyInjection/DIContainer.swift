@@ -2,16 +2,12 @@
 //  DIContainerKey.swift
 //  Recipes
 //
-//  Created by Daniella Arteaga on 20/11/24.
+//  Created by Daniella Arteaga on 21/11/24.
 //
-
-import Swinject
-import Foundation
 import SwiftUI
 
-@MainActor
-private struct DIContainerKey: @preconcurrency EnvironmentKey {
-    static let defaultValue: DIContainer = DIContainer.shared
+private struct DIContainerKey: EnvironmentKey {
+    static let defaultValue: DIContainer = DIContainer()
 }
 
 extension EnvironmentValues {
@@ -20,50 +16,54 @@ extension EnvironmentValues {
         set { self[DIContainerKey.self] = newValue }
     }
 }
-
-@MainActor
-final class DIContainer: ObservableObject {
+protocol DIContainerProtocol{
+    func register<Service>(_ service: Service, for type: Service.Type)
+    func resolve<Service>(_ type: Service.Type) -> Service?
+}
+final class DIContainer: DIContainerProtocol {
+    
     static let shared = DIContainer()
-    let container: Container
-    let recipesService: RecipesServiceProtocol
-    var errorManager: ErrorManager
-    var networkMonitor: NetworkMonitor
+    private var services: [String: Any] = [:]
     
-    
-    private init() {
-        container = Container()
-        self.errorManager = ErrorManager()
-        self.networkMonitor = NetworkMonitor(errorManager: self.errorManager)
-        if CommandLine.arguments.contains("--uitesting") {
-            self.errorManager = ErrorManager()
-            self.networkMonitor = NetworkMonitor(errorManager: self.errorManager)
-            self.recipesService = MockRecipesService(errorManager: self.errorManager)
-        } else {
-            self.recipesService = RecipesService(errorManager: self.errorManager)
-        }
-        setupDependencies()
+    func register<Service>(_ service: Service, for type: Service.Type){
+        let key = String(describing: type)
+        services[key] = service
     }
     
-    
-    private func setupDependencies() {
-        container.register(ErrorManager.self) { _ in self.errorManager }.inObjectScope(.container)
-        container.register(NetworkMonitor.self) { _ in self.networkMonitor }.inObjectScope(.container)
-        container.register(RecipesServiceProtocol.self) { _ in self.recipesService }.inObjectScope(.container)
-        
-        
-        container.register(RecipeRepositoryProtocol.self) { resolver in
-            RecipeRepository(apiService: resolver.resolve(RecipesServiceProtocol.self)!)
-        }.inObjectScope(.container)
-        
-        container.register(FetchRecipesUseCase.self) { resolver in
-            FetchRecipesUseCase(recipeRepository: resolver.resolve(RecipeRepositoryProtocol.self)!)
-        }
-        container.register(RecipeListViewModel.self) { resolver in
-            RecipeListViewModel(fetchRecipesUseCase: resolver.resolve(FetchRecipesUseCase.self)!)
-        }
+    func resolve<Service>(_ type: Service.Type) -> Service?{
+        let key = String(describing: type)
+        guard let service = services[key] else { return nil }
+        return service as? Service
     }
     
-    func resolveViewModel() -> RecipeListViewModel {
-        return container.resolve(RecipeListViewModel.self)!
+    static func testContainer(
+        recipesService: RecipesServiceProtocol
+    ) -> DIContainer{
+        let container = DIContainer()
+        let errorManager = ErrorManager()
+        container.register(errorManager, for: ErrorManager.self)
+        container.register(recipesService, for: RecipesServiceProtocol.self)
+        let recipesRepository = RecipesRepository(apiService: recipesService)
+        let recipesUseCase = RecipesUseCase(recipeRepository: recipesRepository)
+        container.register(recipesUseCase, for: RecipesUseCaseProtocol.self)
+        return container
+    }
+    
+    static func configureProductionContainer() -> DIContainer {
+        let container = DIContainer()
+        let errorManager = ErrorManager()
+        container.register(errorManager, for: ErrorManager.self)
+        
+        let networkManager = NetworkMonitor(errorManager: errorManager)
+        container.register(networkManager, for: NetworkMonitor.self)
+        
+        let recipesService = RecipesService(errorManager: errorManager)
+        container.register(recipesService, for: RecipesServiceProtocol.self)
+        
+        let recipeRepository = RecipesRepository(apiService: recipesService)
+        let recipesUseCase = RecipesUseCase(recipeRepository: recipeRepository)
+        container.register(recipesUseCase, for: RecipesUseCaseProtocol.self)
+        
+        return container
     }
 }

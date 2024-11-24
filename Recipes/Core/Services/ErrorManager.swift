@@ -31,16 +31,39 @@ final class ErrorManager: ObservableObject {
     }
 }
 
-struct AppError: Identifiable, Equatable, CustomStringConvertible {
-    let id = UUID()
-    let title: String
-    let message: String
-
-    var description: String {
-        return "\(title): \(message)"
+enum AppError: Identifiable, Error {
+    case badResponse
+    case networkError
+    case unknownError
+    case decodingError
+ 
+    var id: String {
+        return "\(self)"
     }
 
-    static func == (lhs: AppError, rhs: AppError) -> Bool {
-        lhs.id == rhs.id
+    var title: String {
+        switch self {
+        case .badResponse:
+            return "Bad Response"
+        case .networkError:
+            return "Network Error"
+        case .unknownError:
+            return "Unknown Error"
+        case .decodingError:
+            return "Decoding Error"
+        }
+    }
+
+    var message: String {
+        switch self {
+        case .badResponse:
+            return "The server returned an invalid response. Please try again later."
+        case .networkError:
+            return "There was a problem connecting to the network. Please check your connection."
+        case .unknownError:
+            return "An unknown error occurred. Please try again later."
+        case .decodingError:
+            return "There was a problem decoding the response. Please try again later."
+        }
     }
 }

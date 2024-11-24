@@ -7,15 +7,15 @@
 
 import Foundation
 
-protocol FetchRecipesUseCaseProtocol {
+protocol RecipesUseCaseProtocol {
     func fetchRecipes() async throws -> [Recipe]?
 }
 
-final class FetchRecipesUseCase: FetchRecipesUseCaseProtocol {
+final class RecipesUseCase: RecipesUseCaseProtocol {
     
-    let recipeRepository: RecipeRepositoryProtocol
+    let recipeRepository: RecipesRepositoryProtocol
     
-    init(recipeRepository: RecipeRepositoryProtocol) {
+    init(recipeRepository: RecipesRepositoryProtocol) {
         self.recipeRepository = recipeRepository
     }
     
