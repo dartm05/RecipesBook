@@ -41,7 +41,7 @@ struct RecipeListView: View {
                         Image("no_data")
                             .resizable()
                             .frame(maxWidth: 200, maxHeight: 200)
-                            .padding(.horizontal)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 80, trailing: 0))
                     }
                     
                 }
