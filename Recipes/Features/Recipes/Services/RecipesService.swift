@@ -18,7 +18,7 @@ final class RecipesService: RecipesServiceProtocol {
     }
     
     func fetchRecipes() async throws -> [Recipe]? {
-        guard let url = URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json") else {
+        guard let url = URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json") else {
             throw AppError.badResponse
         }
         

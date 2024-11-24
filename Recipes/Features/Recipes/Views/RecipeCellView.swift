@@ -36,7 +36,6 @@ struct RecipeDetailsView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 30, height: 30)
-                    .padding(.top, 10)
                     .onTapGesture {
                         youtubeOnTap()
                     }
