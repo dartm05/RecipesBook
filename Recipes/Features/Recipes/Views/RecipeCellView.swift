@@ -7,9 +7,13 @@
 
 import SwiftUI
 
-struct RecipeCellView: View {
+struct RecipeCellView: View, Equatable {
     let recipe: Recipe
     let youtubeOnTap: () -> Void
+    
+    static func == (lhs: RecipeCellView, rhs: RecipeCellView) -> Bool {
+        return lhs.recipe.id == rhs.recipe.id && lhs.recipe.name == rhs.recipe.name
+    }
     
     var body: some View {
         VStack{
@@ -52,7 +56,7 @@ struct RecipeImageCell: View {
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: recipe.photoUrlLarge ?? "")) { image in
+            CachedAsyncImage(url: URL(string: recipe.photoUrlLarge ?? ""), content: { image in
                 image
                     .resizable()
                     .scaledToFit()
@@ -66,7 +70,7 @@ struct RecipeImageCell: View {
                             .padding()
                             .accessibilityIdentifier("recipeName")
                     }
-            } placeholder: {
+            }, placeholder: {
                 Image(systemName: "photo")
                     .resizable()
                     .scaledToFit()
@@ -83,7 +87,7 @@ struct RecipeImageCell: View {
                             .accessibilityIdentifier("recipeName")
                     }
             }
-        }
+            )}
         .frame(width: 180, height: 220, alignment: .top)
         .background(LinearGradient(gradient: Gradient(colors: [.gray.opacity(0.3), .gray]), startPoint: .topLeading, endPoint: .bottomTrailing))
         .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
